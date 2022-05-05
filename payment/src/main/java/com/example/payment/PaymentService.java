@@ -1,0 +1,48 @@
+package com.example.payment;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import java.util.UUID;
+
+@Service
+public class PaymentService {
+    private final PaymentRepository paymentRepository;
+
+    public PaymentService(PaymentRepository paymentRepository) {
+        this.paymentRepository = paymentRepository;
+    }
+
+    public ResponseEntity<Payment> getPayment(UUID paymentUid) {
+        try {
+            Payment payment = paymentRepository.findByPayment_uid(paymentUid);
+            return new ResponseEntity<>(payment, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public ResponseEntity<HttpStatus> cancelPayment(UUID paymentUid) {
+        try {
+            Payment payment = paymentRepository.findByPayment_uid(paymentUid);
+            payment.setStatus(PaymentStatus.CANCELED);
+            paymentRepository.save(payment);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public ResponseEntity<HttpStatus> createPayment(Payment payment) {
+        try {
+            System.out.println("create payment");
+            paymentRepository.save(new Payment(payment.getPayment_uid(), payment.getStatus(), payment.getPrice()));
+            System.out.println(paymentRepository);
+            System.out.println(payment);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+}
