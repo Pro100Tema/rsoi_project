@@ -15,7 +15,7 @@ public class RentalService {
         this.rentalRepository = rentalRepository;
     }
 
-    public ResponseEntity<List<Rental>> getRentals(String username) {
+    public ResponseEntity<List<RentalInfo>> getRentals(String username) {
         try {
             List<Rental> rental = rentalRepository.findByUsername(username);
             return new ResponseEntity(rental, HttpStatus.OK);
@@ -55,11 +55,20 @@ public class RentalService {
         }
     }
 
-    public ResponseEntity<HttpStatus> createRental(Rental rental) {
+    public ResponseEntity<RentalInfo> createRental(RentalInfo rentalInfo) {
         try {
-            rentalRepository.save(new Rental(rental.getRental_uid(), rental.getUsername(), rental.getPayment_uid(),
-                    rental.getCar_uid(), rental.getDate_from(), rental.getDate_to(), rental.getStatus()));
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            Rental rental = new Rental();
+            rental.setCar_uid(UUID.fromString(rentalInfo.getCar_uid()));
+            UUID rental_uuid = UUID.randomUUID();
+            rental.setRental_uid(rental_uuid);
+            rental.setPayment_uid(UUID.fromString(rentalInfo.getPayment_uid()));
+            rental.setUsername(rentalInfo.getUser_uid());
+            rental.setDate_from(rentalInfo.getDateFrom());
+            rental.setDate_to(rentalInfo.getDateTo());
+            rental.setStatus(RentalStatus.IN_PROGRESS);
+            rentalRepository.save(rental);
+            rentalInfo.setRental_uid(rental_uuid.toString());
+            return new ResponseEntity<>(rentalInfo, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.SERVICE_UNAVAILABLE);
         }

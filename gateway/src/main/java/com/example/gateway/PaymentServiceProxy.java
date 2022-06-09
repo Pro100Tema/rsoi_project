@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
-@FeignClient(name = "payment", url = "https://lab2-egorychev-payment.herokuapp.com/api/v1")
-//@FeignClient(name = "payment", url = "http://localhost:8003/api/v1")
+//@FeignClient(name = "payment", url = "https://lab2-egorychev-payment.herokuapp.com/api/v1")
+@FeignClient(name = "payment", url = "http://localhost:8003/api/v1")
 public interface PaymentServiceProxy {
 
     @GetMapping("/payments/{paymentUid}")
@@ -19,4 +19,7 @@ public interface PaymentServiceProxy {
 
     @PostMapping("/payments")
     ResponseEntity<HttpStatus> createPayment(@RequestBody Payment payment);
+
+    @PostMapping("/pay")
+    public ResponseEntity<PaymentCarInfo> paymentForCar(@RequestHeader("user_uid") String user_uid, @RequestBody PaymentInfo paymentInfo);
 }

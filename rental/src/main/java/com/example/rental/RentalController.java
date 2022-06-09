@@ -17,7 +17,7 @@ public class RentalController {
     }
 
     @GetMapping("/rental")
-    public ResponseEntity<List<Rental>> getRentals(@RequestHeader("X-User-Name") String username) {
+    public ResponseEntity<List<RentalInfo>> getRentals(String username) {
         return rentalService.getRentals(username);
     }
 
@@ -36,8 +36,8 @@ public class RentalController {
         return rentalService.finishRental(username, rentalUid);
     }
 
-    @PostMapping("/rental")
-    public ResponseEntity<HttpStatus> createRental(@RequestBody Rental rental) {
-        return rentalService.createRental(rental);
+    @PostMapping("/create-rental")
+    public ResponseEntity<RentalInfo> createRental(@RequestBody RentalInfo rentalInfo) {
+        return rentalService.createRental(rentalInfo);
     }
 }

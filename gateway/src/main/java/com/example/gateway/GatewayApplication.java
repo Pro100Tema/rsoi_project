@@ -7,9 +7,7 @@ import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfigurat
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
-@SpringBootApplication(exclude = {HibernateJpaAutoConfiguration.class,
-        DataSourceAutoConfiguration.class})
-@EnableDiscoveryClient
+@SpringBootApplication
 @EnableFeignClients
 public class GatewayApplication {
     public static void main(String[] args) {

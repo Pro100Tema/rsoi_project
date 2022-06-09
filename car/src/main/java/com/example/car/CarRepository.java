@@ -8,6 +8,6 @@ import java.util.UUID;
 
 @Repository
 public interface CarRepository extends JpaRepository<Car, Long> {
-    @Query("select c from Car c where c.car_uid = ?1")
+    @Query("SELECT c FROM Car c WHERE c.car_uid = ?1")
     Car findByCar_uid(UUID car_uid);
 }

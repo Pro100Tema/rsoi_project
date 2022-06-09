@@ -1,10 +1,13 @@
 package com.example.gateway;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.UUID;
 
 public class Car {
     private Long id;
-    private UUID car_uid;
+    @JsonProperty("car_uid")
+    private String car_uid;
 
     private String brand;
     private String model;
@@ -12,36 +15,8 @@ public class Car {
 
     private Integer power;
     private Integer price;
-    private CarListClass type;
+    private String type;
     private Boolean availability;
-
-    public Car() {
-    }
-
-    public Car(Long id, UUID car_uid, String brand, String model, String registration_number, Integer power, Integer price, CarListClass type, Boolean availability) {
-        super();
-        this.id = id;
-        this.car_uid = car_uid;
-        this.brand = brand;
-        this.model = model;
-        this.registration_number = registration_number;
-        this.power = power;
-        this.price = price;
-        this.type = type;
-        this.availability = availability;
-    }
-
-    public Car(UUID car_uid, String brand, String model, String registration_number, Integer power, Integer price, CarListClass type, Boolean availability) {
-        super();
-        this.car_uid = car_uid;
-        this.brand = brand;
-        this.model = model;
-        this.registration_number = registration_number;
-        this.power = power;
-        this.price = price;
-        this.type = type;
-        this.availability = availability;
-    }
 
     public Long getId() {
         return id;
@@ -51,11 +26,12 @@ public class Car {
         this.id = id;
     }
 
-    public UUID getCar_uid() {
+    @JsonProperty("car_uid")
+    public String getCar_uid() {
         return car_uid;
     }
 
-    public void setCar_uid(UUID car_uid) {
+    public void setCar_uid(String car_uid) {
         this.car_uid = car_uid;
     }
 
@@ -99,11 +75,11 @@ public class Car {
         this.price = price;
     }
 
-    public CarListClass getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(CarListClass type) {
+    public void setType(String type) {
         this.type = type;
     }
 

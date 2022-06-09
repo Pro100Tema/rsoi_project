@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-@FeignClient(name = "rental", url = "https://lab2-egorychev-rental.herokuapp.com/api/v1")
-//@FeignClient(name = "rental", url = "http://localhost:8002/api/v1")
+//@FeignClient(name = "rental", url = "https://lab2-egorychev-rental.herokuapp.com/api/v1")
+@FeignClient(name = "rental", url = "http://localhost:8002/api/v1")
 public interface RentalServiceProxy {
 
     @GetMapping("/rental")
-    ResponseEntity<List<Rental>> getRentals(@RequestHeader("X-User-Name") String username);
+    ResponseEntity<List<RentalInfo>> getRentals(String username);
 
     @GetMapping("/rental/{rentalUid}")
     ResponseEntity<Rental> getRental(@RequestHeader("X-User-Name") String username, @PathVariable("rentalUid") UUID rentalUid);
@@ -24,6 +24,6 @@ public interface RentalServiceProxy {
     @DeleteMapping("/rental/{rentalUid}/finish")
     ResponseEntity<UUID> finishRental(@RequestHeader("X-User-Name") String username, @PathVariable("rentalUid") UUID rentalUid);
 
-    @PostMapping("/rental")
-    ResponseEntity<HttpStatus> createRental(@RequestBody Rental rental);
+    @PostMapping("/create-rental")
+    ResponseEntity<RentalInfo> createRental(@RequestBody RentalInfo rentalInfo);
 }

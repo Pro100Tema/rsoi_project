@@ -1,45 +1,44 @@
 package com.example.rental;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 
 @Entity
-@Table(name = "rentals", schema = "rentals")
+@Table(name = "rental", schema = "public")
 public class Rental {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(columnDefinition = "serial")
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "rental_uid", nullable = false, unique = true)
     private UUID rental_uid;
 
-    @Column(nullable = false, length = 80)
+    @Column(name = "username",nullable = false, length = 80)
     private String username;
 
-    @Column(nullable = false)
+    @Column(name = "payment_uid",nullable = false)
     private UUID payment_uid;
 
-    @Column(nullable = false)
+    @Column(name = "car_uid",nullable = false)
     private UUID car_uid;
 
-    @Column(nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date date_from;
+    @Column(name = "date_from",nullable = false)
+    private LocalDateTime date_from;
 
-    @Column(nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date date_to;
+    @Column(name = "date_to",nullable = false)
+    private LocalDateTime date_to;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
+    @Column(name = "status",nullable = false, length = 20)
     private RentalStatus status;
 
     public Rental() {
     }
 
-    public Rental(Long id, UUID rental_uid, String username, UUID payment_uid, UUID car_uid, Date date_from, Date date_to, RentalStatus status) {
+    public Rental(Long id, UUID rental_uid, String username, UUID payment_uid, UUID car_uid, LocalDateTime date_from, LocalDateTime date_to, RentalStatus status) {
         super();
         this.id = id;
         this.rental_uid = rental_uid;
@@ -51,7 +50,7 @@ public class Rental {
         this.status = status;
     }
 
-    public Rental(UUID rental_uid, String username, UUID payment_uid, UUID car_uid, Date date_from, Date date_to, RentalStatus status) {
+    public Rental(UUID rental_uid, String username, UUID payment_uid, UUID car_uid, LocalDateTime date_from, LocalDateTime date_to, RentalStatus status) {
         super();
         this.rental_uid = rental_uid;
         this.username = username;
@@ -102,11 +101,11 @@ public class Rental {
         this.car_uid = car_uid;
     }
 
-    public Date getDate_from() {
+    public LocalDateTime getDate_from() {
         return date_from;
     }
 
-    public void setDate_from(Date date_from) {
+    public void setDate_from(LocalDateTime date_from) {
         this.date_from = date_from;
     }
 
@@ -128,16 +127,12 @@ public class Rental {
         return year;
     }
 
-    public Date getDate_to() {
+    public LocalDateTime getDate_to() {
         return date_to;
     }
 
-    public void setDate_to(Date date_to) {
+    public void setDate_to(LocalDateTime date_to) {
         this.date_to = date_to;
-    }
-
-    public String getDate_from_string() {
-        return getString((date_to));
     }
 
     public RentalStatus getStatus() {
@@ -146,10 +141,6 @@ public class Rental {
 
     public void setStatus(RentalStatus status) {
         this.status = status;
-    }
-
-    public String getDate_to_string() {
-        return getString((date_to));
     }
 
     @Override

@@ -4,35 +4,37 @@ import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
-@Table(name = "cars", schema = "cars")
+@Table(name = "car", schema = "public")
 public class Car {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(columnDefinition = "serial")
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "car_uid",nullable = false, unique = true)
     private UUID car_uid;
 
-    @Column(nullable = false, length = 80)
+    @Column(name = "brand", nullable = false, length = 80)
     private String brand;
 
-    @Column(nullable = false, length = 80)
+    @Column(name = "model",nullable = false, length = 80)
     private String model;
 
-    @Column(nullable = false, length = 20)
+    @Column(name = "registration_number",nullable = false, length = 20)
     private String registration_number;
 
+    @Column(name = "power",nullable = false, length = 80)
     private Integer power;
 
-    @Column(nullable = false)
+    @Column(name = "price",nullable = false)
     private Integer price;
 
     @Enumerated(EnumType.STRING)
-    @Column(length = 20)
+    @Column(name = "type",length = 20)
     private CarListClass type;
 
-    @Column(nullable = false)
+    @Column(name = "availability",nullable = false)
     private Boolean availability;
 
     public Car() {

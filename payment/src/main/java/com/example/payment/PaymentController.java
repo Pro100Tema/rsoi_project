@@ -29,4 +29,9 @@ public class PaymentController {
     public ResponseEntity<HttpStatus> createPayment(@RequestBody Payment payment) {
         return paymentService.createPayment(payment);
     }
+
+    @PostMapping("/pay")
+    public ResponseEntity<PaymentInfo> paymentForCar(@RequestHeader("user_uid") String user_uid, @RequestBody PaymentInfo paymentInfo) {
+        return paymentService.paymentForCar(user_uid, paymentInfo);
+    }
 }

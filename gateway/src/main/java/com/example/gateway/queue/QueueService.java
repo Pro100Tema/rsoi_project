@@ -1,9 +1,9 @@
 package com.example.gateway.queue;
 
-import com.example.lab2.gateway.CarAndPaymentInfo;
-import com.example.lab2.gateway.CarServiceProxy;
-import com.example.lab2.gateway.PaymentServiceProxy;
-import com.example.lab2.gateway.RentalServiceProxy;
+import com.example.gateway.CarAndPaymentInfo;
+import com.example.gateway.CarServiceProxy;
+import com.example.gateway.PaymentServiceProxy;
+import com.example.gateway.RentalServiceProxy;
 
 
 import org.springframework.http.HttpStatus;
