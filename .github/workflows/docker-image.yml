@@ -1,18 +1,102 @@
-name: Docker Image CI
-
+name: RSOI-CW project
 on:
   push:
-    branches: [ "master" ]
+    branches:
+      - master
   pull_request:
-    branches: [ "master" ]
-
+    branches:
+      - master
 jobs:
-
   build:
-
+    name: Autograding
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      - uses: actions/checkout@v2
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+          cache: 'maven'
+
+      - name: Build project with Maven
+        run: mvn -B clean package
+
+      - name: gateway image
+        uses: mr-smithers-excellent/docker-build-push@v5
+        with:
+          image: ea22222/gateway
+          tags: latest
+          registry: docker.io
+          directory: gateway
+          dockerfile: gateway/Dockerfile
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: car image
+        uses: mr-smithers-excellent/docker-build-push@v5
+        with:
+          image: ea22222/car
+          tags: latest
+          registry: docker.io
+          directory: car
+          dockerfile: car/Dockerfile
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: front image
+        uses: mr-smithers-excellent/docker-build-push@v5
+        with:
+          image: ea22222/front
+          tags: latest
+          registry: docker.io
+          directory: front
+          dockerfile: front/Dockerfile
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: payment image
+        uses: mr-smithers-excellent/docker-build-push@v5
+        with:
+          image: ea22222/payment
+          tags: latest
+          registry: docker.io
+          directory: payment
+          dockerfile: payment/Dockerfile
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: rental image
+        uses: mr-smithers-excellent/docker-build-push@v5
+        with:
+          image: ea22222/rental
+          tags: latest
+          registry: docker.io
+          directory: rental
+          dockerfile: rental/Dockerfile
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: session image
+        uses: mr-smithers-excellent/docker-build-push@v5
+        with:
+          image: ea22222/session
+          tags: latest
+          registry: docker.io
+          directory: session
+          dockerfile: session/Dockerfile
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: statistic image
+        uses: mr-smithers-excellent/docker-build-push@v5
+        with:
+          image: ea22222/statistic
+          tags: latest
+          registry: docker.io
+          directory: statistic
+          dockerfile: statistic/Dockerfile
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
