@@ -19,10 +19,30 @@ jobs:
         with:
           java-version: '11'
           distribution: 'adopt'
-          cache: 'maven'
+          #cache: 'maven'
 
-      - name: Build project with Maven
-        run: mvn -B clean package
+      #- name: Build project with Maven
+      #  run: mvn -B clean package
+      - name: Build gateway
+        run: mvn --batch-mode --update-snapshots verify -f gateway
+
+      - name: Build car
+        run: mvn --batch-mode --update-snapshots verify -f car
+
+      - name: Build front
+        run: mvn --batch-mode --update-snapshots verify -f front
+
+      - name: Build payment
+        run: mvn --batch-mode --update-snapshots verify -f payment
+
+      - name: Build rental
+        run: mvn --batch-mode --update-snapshots verify -f rental
+
+      - name: Build session
+        run: mvn --batch-mode --update-snapshots verify -f session
+
+      - name: Build statistic
+        run: mvn --batch-mode --update-snapshots verify -f statistic
 
       - name: gateway image
         uses: mr-smithers-excellent/docker-build-push@v5
