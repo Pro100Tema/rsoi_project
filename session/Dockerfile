@@ -1,6 +1,6 @@
 FROM openjdk:11
 ADD target/spring-boot-docker-session.jar spring-boot-docker-session.jar
-ENTRYPOINT["java", "-jar", "spring-boot-docker-session.jar"]
+ENTRYPOINT ["java", "-jar", "spring-boot-docker-session.jar"]
 EXPOSE 8084
 
 #FROM openjdk:11-jdk as builder
